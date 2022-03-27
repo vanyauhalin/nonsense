@@ -19,18 +19,14 @@ var currency = []string{"USDT", "BTC"}
 type SearchResult struct {
 	Data SearchResultData
 }
-
 type SearchResultData = []SearchResultItem
-
 type SearchResultItem struct {
 	Adv SearchResultItemAdv
 }
-
 type SearchResultItemAdv struct {
 	Price string
 	TradeMethods []SearchResultItemTradeMethod
 }
-
 type SearchResultItemTradeMethod struct {
 	Identifier string
 }
@@ -58,7 +54,7 @@ func do() error {
 			prices := make(map[string]float64)
 
 			for _, cur := range currency {
-				price, err := search(ctx, cur)
+				price, err := search(cur)
 				if err != nil {
 					log.Fatalln("search error:", err)
 					return err
@@ -87,8 +83,8 @@ func do() error {
 	return err
 }
 
-func search(ctx context.Context, asset string) (float64, error) {
-	data, err := request(ctx, asset)
+func search(asset string) (float64, error) {
+	data, err := request(asset)
 	if err != nil {
 		log.Fatalln("request error:", err)
 		return 0, err
@@ -103,7 +99,7 @@ func search(ctx context.Context, asset string) (float64, error) {
 	return price, err
 }
 
-func request(ctx context.Context, asset string) (SearchResultData, error) {
+func request(asset string) (SearchResultData, error) {
 	payload := bytes.NewBuffer([]byte(fmt.Sprintf(`{
 		"asset": "%s",
 		"fiat": "RUB",
