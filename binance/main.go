@@ -14,7 +14,7 @@ import (
 	"github.com/gen2brain/beeep"
 )
 
-var currency = []string{"USDT", "BTC", "RUB"}
+var currency = []string{"USDT", "BTC"}
 
 type SearchResult struct {
 	Data SearchResultData
